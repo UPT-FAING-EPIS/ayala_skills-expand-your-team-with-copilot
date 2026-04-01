@@ -16,7 +16,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const timeFilters = document.querySelectorAll(".time-filter");
   const themeToggleButton = document.getElementById("theme-toggle-button");
   const themeToggleLabel = document.getElementById("theme-toggle-label");
-  const themeIcon = themeToggleButton?.querySelector(".theme-icon");
+  const themeIcon = themeToggleButton
+    ? themeToggleButton.querySelector(".theme-icon")
+    : null;
 
   // Authentication elements
   const loginButton = document.getElementById("login-button");
@@ -79,10 +81,12 @@ document.addEventListener("DOMContentLoaded", () => {
       document.body.classList.add("dark-mode");
       themeToggleLabel.textContent = "Light Mode";
       themeIcon.textContent = "☀️";
+      themeToggleButton.setAttribute("aria-label", "Switch to light mode");
     } else {
       document.body.classList.remove("dark-mode");
       themeToggleLabel.textContent = "Dark Mode";
       themeIcon.textContent = "🌙";
+      themeToggleButton.setAttribute("aria-label", "Switch to dark mode");
     }
   }
 
