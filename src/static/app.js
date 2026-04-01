@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const timeFilters = document.querySelectorAll(".time-filter");
   const themeToggleButton = document.getElementById("theme-toggle-button");
   const themeToggleLabel = document.getElementById("theme-toggle-label");
-  const themeIcon = themeToggleButton.querySelector(".theme-icon");
+  const themeIcon = themeToggleButton?.querySelector(".theme-icon");
 
   // Authentication elements
   const loginButton = document.getElementById("login-button");
@@ -71,6 +71,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function updateThemeUI() {
+    if (!themeToggleButton || !themeToggleLabel || !themeIcon) {
+      return;
+    }
+
     if (darkModeEnabled) {
       document.body.classList.add("dark-mode");
       themeToggleLabel.textContent = "Light Mode";
@@ -668,7 +672,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  themeToggleButton.addEventListener("click", toggleTheme);
+  if (themeToggleButton) {
+    themeToggleButton.addEventListener("click", toggleTheme);
+  }
 
   // Open registration modal
   function openRegistrationModal(activityName) {
