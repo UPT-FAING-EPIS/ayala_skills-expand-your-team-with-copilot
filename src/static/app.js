@@ -14,6 +14,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const categoryFilters = document.querySelectorAll(".category-filter");
   const dayFilters = document.querySelectorAll(".day-filter");
   const timeFilters = document.querySelectorAll(".time-filter");
+  const themeToggleButton = document.getElementById("theme-toggle-button");
+  const themeToggleLabel = document.getElementById("theme-toggle-label");
+  const themeIcon = themeToggleButton.querySelector(".theme-icon");
 
   // Authentication elements
   const loginButton = document.getElementById("login-button");
@@ -43,6 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Authentication state
   let currentUser = null;
+  let darkModeEnabled = false;
 
   // Time range mappings for the dropdown
   const timeRanges = {
@@ -64,6 +68,29 @@ document.addEventListener("DOMContentLoaded", () => {
     if (activeTimeFilter) {
       currentTimeRange = activeTimeFilter.dataset.time;
     }
+  }
+
+  function updateThemeUI() {
+    if (darkModeEnabled) {
+      document.body.classList.add("dark-mode");
+      themeToggleLabel.textContent = "Light Mode";
+      themeIcon.textContent = "☀️";
+    } else {
+      document.body.classList.remove("dark-mode");
+      themeToggleLabel.textContent = "Dark Mode";
+      themeIcon.textContent = "🌙";
+    }
+  }
+
+  function loadThemePreference() {
+    darkModeEnabled = localStorage.getItem("theme") === "dark";
+    updateThemeUI();
+  }
+
+  function toggleTheme() {
+    darkModeEnabled = !darkModeEnabled;
+    localStorage.setItem("theme", darkModeEnabled ? "dark" : "light");
+    updateThemeUI();
   }
 
   // Function to set day filter
@@ -641,6 +668,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  themeToggleButton.addEventListener("click", toggleTheme);
+
   // Open registration modal
   function openRegistrationModal(activityName) {
     modalActivityName.textContent = activityName;
@@ -863,6 +892,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Initialize app
   checkAuthentication();
+  loadThemePreference();
   initializeFilters();
   fetchActivities();
 });
