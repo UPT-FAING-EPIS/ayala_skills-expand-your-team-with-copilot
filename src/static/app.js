@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // State for activities and filters
   let allActivities = {};
   let currentFilter = "all";
-  let currentDifficulty = "all_levels";
+  let currentDifficulty = "no_difficulty";
   let searchQuery = "";
   let currentDay = "";
   let currentTimeRange = "";
@@ -443,7 +443,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const activityDifficulty = details.difficulty
         ? details.difficulty.toLowerCase()
         : null;
-      if (currentDifficulty === "all_levels") {
+      if (currentDifficulty === "no_difficulty") {
         if (activityDifficulty) {
           return;
         }
